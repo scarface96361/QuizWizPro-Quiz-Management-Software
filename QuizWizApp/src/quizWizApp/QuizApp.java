@@ -12,6 +12,12 @@ public class QuizApp {
 		
 		QuizMenu quiz= new QuizMenu();
         quiz.adminMenu();
+		
+		
+		//QuizMenu quiz2= new QuizMenu();
+        //quiz2.startMenu();
+		
+		
 	}
 
 }

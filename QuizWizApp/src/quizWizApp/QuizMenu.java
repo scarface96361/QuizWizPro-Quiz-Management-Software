@@ -8,9 +8,38 @@ public class QuizMenu {
 	public String AdminUserId;
 	public String AdminPassword;
 	public int menuSelection;
+	
+	
+	public void startMenu() {
+		System.out.println("1. Press 1 if You are a STUDENT ");
+		System.out.println("2. Press 2 if you are an ADMINISTRATOR ");
+		Scanner inputStartMenu = new Scanner(System.in);
+		int menuSelectionStartMenu = inputStartMenu.nextInt();
+		
+if (menuSelectionStartMenu == 1) {
+	studentLogin();		
+} else if (menuSelection == 2) {
+	adminLogin();
+}
+		
+		
+	}
+	
+	public void studentMenu() {
+		System.out.println("1. Press 1 to Take Test ");
+		System.out.println("2. Press 2 to Check Test Scores ");
+		
+	}
+	
+	public void studentLogin() {
+		System.out.println("Student Login");
+		System.out.println("Please Enter Your User ID");
+		System.out.println("Please Enter Your User Password");
+
+	}
 
 	public void adminLogin() {
-
+		System.out.println("Student Login");
 		System.out.println("Please Enter Your User ID");
 		System.out.println("Please Enter Your User Password");
 
