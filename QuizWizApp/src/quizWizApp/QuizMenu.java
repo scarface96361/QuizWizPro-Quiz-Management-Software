@@ -125,13 +125,13 @@ public class QuizMenu {
 
 		);
 
-		System.out.println("1. If you would like to create a custom Quiz");
-		System.out.println("2. If you would like display a list of your custom quizzes ");
-		System.out.println("3. If you would like to edit a custom Quiz");
-		System.out.println("4. If you would like to delete a custom Quiz");
-		System.out.println("5. If you would like to complete an unfinished saved quiz");
-		System.out.println("6. If you would like to browse our presintalled Quizzes");
-		System.out.println("7. If you would like to exit program");
+		System.out.println("1. Create a Quiz");
+		System.out.println("2. Display a list of  Quizzes ");
+		System.out.println("3. Edit a Quiz");
+		System.out.println("4. Delete a Quiz");
+		System.out.println("5. Deploy Quiz");
+		System.out.println("6. Go Back");
+		System.out.println("7. Exit program");
 
 		menuSelection = input.nextInt();
 		// input.close();
