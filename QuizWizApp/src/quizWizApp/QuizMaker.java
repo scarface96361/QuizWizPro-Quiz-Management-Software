@@ -67,9 +67,11 @@ public class QuizMaker {
 		question = in.nextLine();
 		System.out.println("Question # " + i + ": Has been added Susscefully");
 		System.out.println("");
+		System.out.println("----------------------------------------------------------------------------------------------------------------");
 		System.out.println("Question # " + i + " Please Provide The Correct Answer for this Question");
 		Scanner inAnswer = new Scanner(System.in);
 		rightAnswer = inAnswer.nextLine();
+		System.out.println("----------------------------------------------------------------------------------------------------------------");
 		System.out.println("Question # " + i + " Solution Has Been Added to Answer Key");
 		System.out.println();
 		questionList.add(question);

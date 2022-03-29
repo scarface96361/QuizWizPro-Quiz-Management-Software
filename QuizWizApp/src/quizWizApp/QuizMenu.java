@@ -137,7 +137,7 @@ public class QuizMenu {
 		System.out.println("7. Exit program");
 
 		menuSelection = input.nextInt();
-		input.close();
+		//input.close();
 
 		if (menuSelection == 1) {
 

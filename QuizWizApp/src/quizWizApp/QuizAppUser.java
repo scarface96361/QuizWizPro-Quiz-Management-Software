@@ -45,6 +45,7 @@ public class QuizAppUser {
 		System.out.println("2.Admin");
 		Scanner inputAdmin = new Scanner(System.in);
 		int typeOfAccount= inputAdmin.nextInt();
+		//if the user is a student admin variable  will be made false, if user is an admin ...admin variable  will be true
 		if(typeOfAccount == 1) {
 			this.admin=false;
 			
@@ -94,6 +95,8 @@ public class QuizAppUser {
 		if (studentPass.equals(password) || adminId.equals(id)){
 			QuizMenu adminMenu = new QuizMenu();
 			adminMenu.adminMenu();
+	}else {
+		System.out.println("The username password combination you entered was incorrect. Please try again ");
 	}
 }
 }
