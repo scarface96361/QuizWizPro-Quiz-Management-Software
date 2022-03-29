@@ -68,7 +68,7 @@ public class QuizAppUser {
 		Scanner stuInputUser = new Scanner(System.in);
 		Scanner stuInputPass = new Scanner(System.in);
 		System.out.println("Student Login");
-		System.out.println("Please Enter Your User ID");
+		System.out.println("Please Enter Your Username");
 		String studentId = stuInputUser.next();
 		System.out.println("Please Enter Your User Password");
 		String studentPass = stuInputPass.next();
@@ -85,7 +85,7 @@ public class QuizAppUser {
 		Scanner adminInputUser = new Scanner(System.in);
 		Scanner adminInputPass = new Scanner(System.in);
 		System.out.println("Admin Login");
-		System.out.println("Please Enter Your User ID");
+		System.out.println("Please Enter Your Username");
 		String adminId = adminInputUser.next();
 		System.out.println("Please Enter Your User Password");
 		String studentPass = adminInputPass.next();
