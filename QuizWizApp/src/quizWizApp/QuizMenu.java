@@ -2,49 +2,104 @@ package quizWizApp;
 
 import java.util.Scanner;
 
-
-
 public class QuizMenu {
+
 	public String AdminUserId;
 	public String AdminPassword;
 	public int menuSelection;
-	
-	
+
+//-------------------------------------------------------------------------------------------------------------------------------
+	// *****START MENU*******
+	// This is the first Menu All users will see when program begins
 	public void startMenu() {
+
+		System.out.println("Welcome to Quiz Wiz Pro ");
 		System.out.println("1. Press 1 if You are a STUDENT ");
 		System.out.println("2. Press 2 if you are an ADMINISTRATOR ");
+		// gets and input from user
 		Scanner inputStartMenu = new Scanner(System.in);
 		int menuSelectionStartMenu = inputStartMenu.nextInt();
-		
-if (menuSelectionStartMenu == 1) {
-	studentLogin();		
-} else if (menuSelection == 2) {
-	adminLogin();
-}
-		
-		
+
+		if (menuSelectionStartMenu == 1) {
+			studentLoginPrompt();
+		} else if (menuSelectionStartMenu == 2) {
+			adminLoginPrompt();
+		}
+
 	}
+
+	// ---------------------------------------------------------------------------------------------------------------------------
+	// ***Login Prompt Menu***
+	public void studentLoginPrompt() {
+		Scanner inputStudentM = new Scanner(System.in);
+
+		System.out.println("Please Select From THe Following Options");
+		System.out.println("1. I already have a Student account ");
+		System.out.println("2. Create a Student account ");
+		System.out.println("3. Go Back ");
+		System.out.println("4. Exit Program ");
+		int studentMenuSelection = inputStudentM.nextInt();
+
+		if (studentMenuSelection == 1) {
+			QuizAppUser studentUser = new QuizAppUser();
+			studentUser.studentLogin();
+		} else if (studentMenuSelection == 2) {
+
+			QuizAppUser studentUser = new QuizAppUser();
+			studentUser.createUser();
+			;
+		}
+
+	}
+
 	
+	public void adminLoginPrompt() {
+		Scanner adminStudentM = new Scanner(System.in);
+
+		System.out.println("Please Select From THe Following Options");
+		System.out.println("1. I already have a Admin account ");
+		System.out.println("2. Create an Admin account ");
+		System.out.println("3. Go Back ");
+		System.out.println("4. Exit Program ");
+		int adminMenuSelection = adminStudentM.nextInt();
+
+		if (adminMenuSelection == 1) {
+			QuizAppUser adminUser = new QuizAppUser();
+			adminUser.adminLogin();
+		} else if (adminMenuSelection == 2) {
+
+			QuizAppUser adminUser1 = new QuizAppUser();
+			adminUser1.createUser();
+			
+		}
+
+	}
+
+	// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// *** once a student is logged in they will see this menu
+	// ***Student Main Menu***
 	public void studentMenu() {
-		System.out.println("1. Press 1 to Take Test ");
-		System.out.println("2. Press 2 to Check Test Scores ");
+
+		Scanner inputSInterface = new Scanner(System.in);
 		
-	}
-	
-	public void studentLogin() {
-		System.out.println("Student Login");
-		System.out.println("Please Enter Your User ID");
-		System.out.println("Please Enter Your User Password");
+		System.out.println("1. Take Quiz");
+		System.out.println("2. Check Quiz Scores ");
+		System.out.println("3. Go Back ");
+		System.out.println("4. Exit Program ");
+		
+		int interfaceSelection = inputSInterface.nextInt();
+
+		if (interfaceSelection == 1) {
+			System.out.println("This Function has not yet been coded");
+		} else if (interfaceSelection == 2) {
+
+			System.out.println("This Function has not yet been coded");
+		}
 
 	}
 
-	public void adminLogin() {
-		System.out.println("Student Login");
-		System.out.println("Please Enter Your User ID");
-		System.out.println("Please Enter Your User Password");
-
-	}
-
+	// ----------------------------------------------------------------------------------------------------------------------------
+	// ***Admin Menu ***
 	public void adminMenu() {
 
 		Scanner input = new Scanner(System.in);
@@ -62,10 +117,10 @@ if (menuSelectionStartMenu == 1) {
 		System.out.println("7. If you would like to exit program");
 
 		menuSelection = input.nextInt();
-		//input.close();
+		// input.close();
 
 		if (menuSelection == 1) {
-			
+
 			QuizMaker q3 = new QuizMaker();
 			q3.startBuildQuiz();
 

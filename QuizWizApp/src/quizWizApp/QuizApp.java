@@ -10,12 +10,12 @@ public class QuizApp {
 		//q1.startBuildQuiz();
 		// TODO Auto-generated method stub
 		
-		QuizMenu quiz= new QuizMenu();
-        quiz.adminMenu();
+		//QuizMenu quiz= new QuizMenu();
+        //quiz.adminMenu();
 		
 		
-		//QuizMenu quiz2= new QuizMenu();
-        //quiz2.startMenu();
+		QuizMenu quiz2= new QuizMenu();
+        quiz2.startMenu();
 		
 		
 	}
