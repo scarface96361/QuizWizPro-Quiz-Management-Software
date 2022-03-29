@@ -14,6 +14,9 @@ public class QuizMenu {
 	public void startMenu() {
 
 		System.out.println("Welcome to Quiz Wiz Pro ");
+		System.out.println("Team Trinity Software Group 2022 ");
+		System.out.println("CAPSTONE ");
+		System.out.println("");
 		System.out.println("1. Press 1 if You are a STUDENT ");
 		System.out.println("2. Press 2 if you are an ADMINISTRATOR ");
 		// gets and input from user
@@ -33,7 +36,7 @@ public class QuizMenu {
 	public void studentLoginPrompt() {
 		Scanner inputStudentM = new Scanner(System.in);
 
-		System.out.println("Please Select From THe Following Options");
+		System.out.println("You are a Test Taking Student. Please Select From THe Following Options");
 		System.out.println("1. I already have a Student account ");
 		System.out.println("2. Create a Student account ");
 		System.out.println("3. Go Back ");
@@ -62,7 +65,7 @@ public class QuizMenu {
 	public void adminLoginPrompt() {
 		Scanner adminStudentM = new Scanner(System.in);
 
-		System.out.println("Please Select From THe Following Options");
+		System.out.println("You are an administrator. Please Select From The Following Options");
 		System.out.println("1. I already have a Admin account ");
 		System.out.println("2. Create an Admin account ");
 		System.out.println("3. Go Back ");
@@ -120,7 +123,7 @@ public class QuizMenu {
 	public void adminMenu() {
 
 		Scanner input = new Scanner(System.in);
-		System.out.println("Welcome. Thank you for choosing QUIZZ WIZZ PRO \n" + "Team Trinity Software Group 2022 \n"
+		System.out.println("Welcome. Thank you for choosing QUIZ WIZ PRO \n" + "Team Trinity Software Group 2022 \n"
 				+ "\n" + "please enter the the number of the task you wish to perform \n" + "\n"
 
 		);
