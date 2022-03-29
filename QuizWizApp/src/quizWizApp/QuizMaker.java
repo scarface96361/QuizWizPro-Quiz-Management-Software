@@ -17,6 +17,7 @@ public class QuizMaker {
 	public int c = 1;
 	public int numOfQuestions;
 	int i = 1;
+	int quizIdNumber;
 
 	ArrayList<String> questionList = new ArrayList<String>();
 	ArrayList<String> correctAnswerList = new ArrayList<String>();
