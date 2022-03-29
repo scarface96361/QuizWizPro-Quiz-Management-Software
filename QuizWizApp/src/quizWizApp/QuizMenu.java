@@ -47,12 +47,18 @@ public class QuizMenu {
 
 			QuizAppUser studentUser = new QuizAppUser();
 			studentUser.createUser();
-			;
+			
+		}else if (studentMenuSelection == 3) {
+			startMenu();
+
+		} else if (studentMenuSelection == 4) {
+			System.exit(studentMenuSelection);
+
 		}
 
 	}
 
-	
+	// admin login prompt menu method
 	public void adminLoginPrompt() {
 		Scanner adminStudentM = new Scanner(System.in);
 
@@ -70,10 +76,16 @@ public class QuizMenu {
 
 			QuizAppUser adminUser1 = new QuizAppUser();
 			adminUser1.createUser();
-			
+
+		} else if (adminMenuSelection == 3) {
+			startMenu();
+
+		} else if (adminMenuSelection == 4) {
+			System.exit(adminMenuSelection);
+
 		}
 
-	}
+	} // end of adminLoginPrompt
 
 	// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// *** once a student is logged in they will see this menu
@@ -81,12 +93,12 @@ public class QuizMenu {
 	public void studentMenu() {
 
 		Scanner inputSInterface = new Scanner(System.in);
-		
+
 		System.out.println("1. Take Quiz");
 		System.out.println("2. Check Quiz Scores ");
 		System.out.println("3. Go Back ");
 		System.out.println("4. Exit Program ");
-		
+
 		int interfaceSelection = inputSInterface.nextInt();
 
 		if (interfaceSelection == 1) {
@@ -94,9 +106,14 @@ public class QuizMenu {
 		} else if (interfaceSelection == 2) {
 
 			System.out.println("This Function has not yet been coded");
+		}else if(interfaceSelection == 3) {
+			startMenu();
+		}else if (interfaceSelection == 4) {
+			System.exit(interfaceSelection);
+
 		}
 
-	}
+	}// end of Student Menu
 
 	// ----------------------------------------------------------------------------------------------------------------------------
 	// ***Admin Menu ***
