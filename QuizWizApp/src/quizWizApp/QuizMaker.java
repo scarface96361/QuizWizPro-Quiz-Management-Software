@@ -30,16 +30,17 @@ public class QuizMaker {
 	public void startBuildQuiz() {
 		/* ***** Header ***** */
 
-		System.out.println("QUIZZ WIZZ PRO --- VERSION.1");
-		System.out.println("QUIZ MAKER WIZARD \n" + "");
+		System.out.println("QUIZ WIZ PRO v1");
+		System.out.println("QUESTION MAKER WIZARD \n" + "");
+		System.out.println("CAPSTONE");
 
 		/* ***** Instructions to users ***** */
-
-		System.out.println("*** Please Follow These Instructions:***");
-		System.out.println(" 1) You will be prompted to enter quiz Question");
-		System.out.println(" 2) You will be prompted to enter the correct  answer for question");
+		System.out.println("----------------------------------------------------------------------------------------------------------------");
+		System.out.println("PLEASE FOLLOW THESE INSTRUCTIONS");
+		System.out.println(" 1) You will be prompted to enter the exam question");
+		System.out.println(" 2) You will then be prompted to enter the correct  answer for question");
 		System.out.println(" 3) You will be prompted to enter 3 alternate incorrect answers to quiz question");
-		System.out.println(" 4) This software will randomly shuffle the order of quiz questions ");
+		System.out.println(" 4) Once you have completed entering Questions and Ansewers. This software will randomly shuffle the order of quiz questions ");
 		System.out.println("\n");
 
 		Scanner in = new Scanner(System.in);

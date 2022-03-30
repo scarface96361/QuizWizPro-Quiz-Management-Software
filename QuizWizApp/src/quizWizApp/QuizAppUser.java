@@ -26,7 +26,7 @@ public class QuizAppUser {
 	
 //-----------------------------------------------------------------------------------------------------------------------------------
 //***Create New User	
-	public void createUser() {
+	public void createNewUser() {
 		System.out.println("Please Enter Your First Name");
 		Scanner inputFirstName = new Scanner(System.in);
 		this.firstName = inputFirstName.next();
@@ -73,6 +73,7 @@ public class QuizAppUser {
 		String studentId = stuInputUser.next();
 		System.out.println("Please Enter Your User Password");
 		String studentPass = stuInputPass.next();
+		//this.password = stuInputPass.next();
 		String password = "password";
 		String id = "student";
 		if (studentPass.equals(password) || studentId.equals(id)){
@@ -85,18 +86,48 @@ public class QuizAppUser {
 	public void adminLogin() {
 		Scanner adminInputUser = new Scanner(System.in);
 		Scanner adminInputPass = new Scanner(System.in);
-		System.out.println("Admin Login");
+		int loginAttemptCounter = 0;
+		
+		System.out.println("ADMIN LOGIN");
 		System.out.println("Please Enter Your Username");
 		String adminId = adminInputUser.next();
 		System.out.println("Please Enter Your User Password");
 		String studentPass = adminInputPass.next();
 		String password = "password";
 		String id = "admin";
+		
+		//Testing the password and username combination is correct to login
+		//user allowed 3 attempts
 		if (studentPass.equals(password) || adminId.equals(id)){
 			QuizMenu adminMenu = new QuizMenu();
 			adminMenu.adminMenu();
 	}else {
+		
+		
+		
+while (!(studentPass.equals(password))){
+	if( loginAttemptCounter<3) {
+		System.out.println("");
 		System.out.println("The username password combination you entered was incorrect. Please try again ");
+			System.out.println("*********************************************************************************************");
+			System.out.println("ADMIN LOGIN");
+			System.out.println("Quiz Wiz Pro v1");
+			System.out.println("Please Enter Your Username");
+			String adminId2 = adminInputUser.next();
+			System.out.println("Please Enter Your User Password");
+			String studentPass2 = adminInputPass.next();
+			String password2 = "password";
+			String id2 = "admin";
+	}if((studentPass.equals(password) || adminId.equals(id)) || loginAttemptCounter < 3){
+		QuizMenu adminMenu = new QuizMenu();
+		adminMenu.adminMenu();
+		break;
 	}
+		
+		
+		
+		
+}
+}
 }
 }
