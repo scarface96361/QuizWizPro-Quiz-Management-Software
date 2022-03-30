@@ -24,7 +24,7 @@ public class QuizMaker {
 	ArrayList<String> incorrectAnswer1 = new ArrayList<String>();
 	ArrayList<String> incorrectAnswer2 = new ArrayList<String>();
 	ArrayList<String> incorrectAnswer3 = new ArrayList<String>();
-
+	//*** this array store all possible answers---Wrong Answers as well as Correct Answers
 	ArrayList<String> possibleAnswers = new ArrayList<String>();
 
 	public void startBuildQuiz() {
