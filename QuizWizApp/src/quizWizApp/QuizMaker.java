@@ -1,5 +1,6 @@
 package quizWizApp;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -54,7 +55,7 @@ public class QuizMaker {
 
 // ------------------------------------------------------------------------------------------------------------------------------------------
 
-		/* ***** Iterate through the questions and add correct answers ***** */
+		
 
 		while (numOfQuestions > 10 || numOfQuestions < 1) {
 
@@ -99,9 +100,10 @@ public class QuizMaker {
 		System.out.print("Question # " + i + " Alternate Question choices added Successfully. Question " + i
 				+ " is now complete. \n");
 		System.out.println();
-		/* ***** Add incorrect answers to the possible answers array, finishing with
-		the correct answer on top ***** */
 		
+		
+		/* ***** Add incorrect answers to the "possible answers array", finishing with
+		the correct answer on top ***** */
 		possibleAnswers.add(0, incorrectAlternateOne);
 		possibleAnswers.add(0, incorrectAlternateTwo);
 		possibleAnswers.add(0, incorrectAlternateThree);
