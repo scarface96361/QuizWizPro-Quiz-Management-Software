@@ -14,7 +14,8 @@ public class QuizAppUser {
 	String password;
 	int userID;
 	boolean admin;
-	String typeOfAccout = "s";
+	String typeOfAccout;
+	int confirmation;
 
 	/*
 	 * public QuizAppUser (String fName, String lName, String email, int userID,
@@ -51,9 +52,11 @@ public class QuizAppUser {
 		// admin ...admin variable will be true
 		if (typeOfAccount == 1) {
 			this.admin = false;
+			typeOfAccout = "S";
 
 		} else if (typeOfAccount == 2) {
 			this.admin = true;
+			typeOfAccout = "A";
 		} // end of if statement
 
 		System.out.println("Please Enter a Username");
@@ -74,15 +77,26 @@ public class QuizAppUser {
 		System.out.println("Is this information correct?");
 		System.out.println("1. Press 1 for yes. My information is Correct. ");
 		System.out.println("2. Press 2 to re-enter. My Information is Not Correct");
-		int confirmation = confirmCorrectInfo.nextInt();
+		confirmation = confirmCorrectInfo.nextInt();
 		if (confirmation == 1) {
 			addNewUserToDatabse();
 		} else if (confirmation == 2) {
 			createNewUser();
+		}else if (confirmation > 2) {
+			do {
+				confirmation=0;
+			System.out.println("The Value you entered is not recognized. Please Try again. press 1 or 2. ");
+			System.out.println("1. Press 1 for yes. My information is Correct. ");
+			System.out.println("2. Press 2 to re-enter. My Information is Not Correct");
+			confirmation = confirmCorrectInfo.nextInt();
+		}while (confirmation>2);
+			if (confirmation == 1) {
+				addNewUserToDatabse();
+			} else if (confirmation == 2) {
+				createNewUser();
 		}
-
 	}
-
+	}
 //****************Add Created User to Databse****************************************************************************
 	public void addNewUserToDatabse() throws Exception {
 
