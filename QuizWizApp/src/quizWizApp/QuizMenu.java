@@ -30,8 +30,20 @@ public class QuizMenu {
 		} else if (menuSelectionStartMenu == 2) {
 			// ***If you are and admin
 			adminLoginPrompt();
+		}else if ((menuSelectionStartMenu > 2 )||(menuSelectionStartMenu==0)) {
+			do {
+				menuSelectionStartMenu=0;
+			System.out.println("The Value you entered is not recognized. Please Try again. press 1 or 2. ");
+			System.out.println("1. Press 1 if you are a STUDENT. ");
+			System.out.println("2. Press 2 if you are and ADMIN");
+			menuSelectionStartMenu = inputStartMenu.nextInt();
+		}while (menuSelectionStartMenu>2);
+			if (menuSelectionStartMenu == 1) {
+				studentLoginPrompt();
+			} else if (menuSelectionStartMenu == 2) {
+				adminLoginPrompt();
 		}
-
+		}
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------------

@@ -11,23 +11,18 @@ public class QuizAppUser {
 	String lastName;
 	String email;
 	String username;
-	String password;
+	static String password;
 	int userID;
 	boolean admin;
 	String typeOfAccout;
 	int confirmation;
-
-	/*
-	 * public QuizAppUser (String fName, String lName, String email, int userID,
-	 * boolean admin) {
-	 * 
-	 * this.firstName =fName; this.lastName = lName; this.email = email; this.userID
-	 * = userID; this.admin=admin;
-	 * 
-	 * 
-	 * }
-	 */
-
+	String correctPassword;
+	String loginPassword;
+	String passwordEntered;
+	static String adminUsername;
+	static boolean authenticated = false;
+	int loginAttemptCounter = 0;
+	
 //-----------------------------------------------------------------------------------------------------------------------------------
 //***Create New User	
 	public void createNewUser() throws Exception {
@@ -82,21 +77,22 @@ public class QuizAppUser {
 			addNewUserToDatabse();
 		} else if (confirmation == 2) {
 			createNewUser();
-		}else if (confirmation > 2) {
+		} else if (confirmation > 2) {
 			do {
-				confirmation=0;
-			System.out.println("The Value you entered is not recognized. Please Try again. press 1 or 2. ");
-			System.out.println("1. Press 1 for yes. My information is Correct. ");
-			System.out.println("2. Press 2 to re-enter. My Information is Not Correct");
-			confirmation = confirmCorrectInfo.nextInt();
-		}while (confirmation>2);
+				confirmation = 0;
+				System.out.println("The Value you entered is not recognized. Please Try again. press 1 or 2. ");
+				System.out.println("1. Press 1 for yes. My information is Correct. ");
+				System.out.println("2. Press 2 to re-enter. My Information is Not Correct");
+				confirmation = confirmCorrectInfo.nextInt();
+			} while (confirmation > 2);
 			if (confirmation == 1) {
 				addNewUserToDatabse();
 			} else if (confirmation == 2) {
 				createNewUser();
+			}
 		}
 	}
-	}
+
 //****************Add Created User to Databse****************************************************************************
 	public void addNewUserToDatabse() throws Exception {
 
@@ -126,41 +122,88 @@ public class QuizAppUser {
 		Scanner stuInputPass = new Scanner(System.in);
 		System.out.println("Student Login");
 		System.out.println("Please Enter Your Username");
-		String studentId = stuInputUser.next();
+		String studentUsername = stuInputUser.next();
 		System.out.println("Please Enter Your User Password");
 		String studentPass = stuInputPass.next();
 		// this.password = stuInputPass.next();
-		String password = "password";
-		String id = "student";
-		if (studentPass.equals(password) || studentId.equals(id)) {
-			QuizMenu studentMenu = new QuizMenu();
-			studentMenu.studentMenu();
+		//String password = "password";
+		//String id = "student";
+		
+		
+		try {
+			authenticatePassword(studentUsername, studentPass);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-	}
+		// Testing the password and user name combination is correct to login
+		// user allowed 3 attempts
+		// if (adminInputPass.equals(password) || adminUsername.equals(id)) {
+		if (authenticated == true) {
+			QuizMenu studentMenu = new QuizMenu();
+			studentMenu.studentMenu();
+		} else {
 
+			while (!(authenticated == true)) {
+				if (loginAttemptCounter < 3) {
+					System.out.println("");
+					System.out
+							.println("The username password combination you entered was incorrect. Please try again ");
+					System.out.println(
+							"*********************************************************************************************");
+					System.out.println("STUDENT LOGIN");
+					System.out.println("Quiz Wiz Pro v1");
+					System.out.println("Please Enter Your Username");
+					 studentUsername = stuInputUser.next();
+					System.out.println("Please Enter Your User Password");
+					 studentPass = stuInputPass.next();
+					//String password2 = "password";
+					//String id2 = "admin";
+				}
+				if ((authenticated == true || loginAttemptCounter < 3)) {
+					QuizMenu studentMenu = new QuizMenu();
+					studentMenu.studentMenu();
+					break;
+
+				}
+
+			}
+		}
+	}
+		
+		
+		
+	
 //*** Admin Login********************************************************************************************
 	public void adminLogin() {
 		Scanner adminInputUser = new Scanner(System.in);
 		Scanner adminInputPass = new Scanner(System.in);
-		int loginAttemptCounter = 0;
+		
 
 		System.out.println("ADMIN LOGIN");
 		System.out.println("Please Enter Your Username");
-		String adminId = adminInputUser.next();
+		String adminUsername = adminInputUser.next();
 		System.out.println("Please Enter Your User Password");
-		String studentPass = adminInputPass.next();
-		String password = "password";
-		String id = "admin";
+		String passwordEntered = adminInputPass.next();
+		// String password = "password";
+		// String id = "admin";
+		try {
+			authenticatePassword(adminUsername, passwordEntered);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Testing the password and user name combination is correct to login
 		// user allowed 3 attempts
-		if (studentPass.equals(password) || adminId.equals(id)) {
+		
+		if (authenticated == true) {
 			QuizMenu adminMenu = new QuizMenu();
 			adminMenu.adminMenu();
 		} else {
 
-			while (!(studentPass.equals(password))) {
+			while (!(authenticated == true)) {
 				if (loginAttemptCounter < 3) {
 					System.out.println("");
 					System.out
@@ -170,13 +213,12 @@ public class QuizAppUser {
 					System.out.println("ADMIN LOGIN");
 					System.out.println("Quiz Wiz Pro v1");
 					System.out.println("Please Enter Your Username");
-					String adminId2 = adminInputUser.next();
+					String adminUsernameEntered = adminInputUser.next();
 					System.out.println("Please Enter Your User Password");
-					String studentPass2 = adminInputPass.next();
-					String password2 = "password";
-					String id2 = "admin";
+					 passwordEntered = adminInputPass.next();
+					
 				}
-				if ((studentPass.equals(password) || adminId.equals(id)) || loginAttemptCounter < 3) {
+				if ((authenticated == true || loginAttemptCounter < 3)) {
 					QuizMenu adminMenu = new QuizMenu();
 					adminMenu.adminMenu();
 					break;
@@ -189,27 +231,30 @@ public class QuizAppUser {
 
 //************************************************************************************************************************
 
-	public void queryUsername() throws Exception{
+	public static boolean authenticatePassword(String usrName, String uPass) throws Exception {
+
+		String url = "jdbc:mysql://localhost:3306/userdb";
+		String uName = "root";
+		String pass = "root";
+		String query = "select password from user where username = '" + usrName + "'";
 		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection = DriverManager.getConnection(url, uName, pass);
+
+		Statement myStmt = connection.createStatement();
+		ResultSet resultSet = myStmt.executeQuery(query);
+		resultSet.next();
+
+		String dbPassword = resultSet.getString("password");
 		
+		if (usrName.equals(dbPassword)) {
 
-			String url = "jdbc:mysql://localhost:3306/userdb";
-			String uName = "root";
-			String pass = "";
-			String query ="";
+			boolean authenticated = false;
 
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection connection = DriverManager.getConnection(url, uName, pass);
-			PreparedStatement myStmt = connection.prepareStatement(query);
-
-			myStmt.executeUpdate();
-
-			System.out.println("Your Account Has Been Created");
-			connection.close();
-
+			return authenticated = true;
 		}
-		
-		
+		return authenticated;
 
 	}
+}
 
