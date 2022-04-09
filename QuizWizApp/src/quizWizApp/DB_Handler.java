@@ -9,7 +9,7 @@ import java.util.function.ToDoubleBiFunction;
 public class DB_Handler {
 
 
-    String DB_URL ="jdbc:MySQL://localhost/joseph";
+    String DB_URL ="jdbc:mysql://quizmaker.cs5pwn0dgd4l.us-east-1.rds.amazonaws.com:3306";
     String DB_User = "quizmaker";
     String DB_password = "quizmaker";
     String DB_Connect;
@@ -56,4 +56,76 @@ public class DB_Handler {
         }
 
     }
-}
+
+    /**Create_Table creates the table used to store data long term
+     *
+     */
+    public void Create_Table() {
+        String sqlQuiz = "CREATE TABLE QUIZ" +
+                "(Quiz_ID INT not NULL PRIMARY KEY," +
+                "QuizType VARCHAR(255))";
+        String sqlQuestions = "CREATE TABLE Questions" +
+                "(Question_ID INT not NULL PRIMARY KEY," +
+                "Question VARCHAR(255)," +
+                "Quiz_ID  INT FOREIGN KEY REFERENCES QUIZ(Quiz_ID))";
+        String sqlAnswers = "CREATE TABLE Answers" +
+                "(Answer_ID INT not NULL PRIMARY KEY AUTO_INCREMMENT," +
+                "Quiz_ID INT FOREIGN KEY REFERENCES QUIZ(Quiz_ID)," +
+                "Question_ID INT FOREIGN KEY REFERENCES Questions(Question_ID)," +
+                "Answer VARCHAR(255),"+
+                "isCorrect BIT )";
+
+
+        //Trying a connection and opening it
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_User, DB_password);
+             Statement stmt = conn.createStatement();){
+
+            stmt.executeUpdate(sqlQuiz);
+            stmt.executeUpdate(sqlQuestions);
+            stmt.executeUpdate(sqlQuiz);
+
+            System.out.println("Created tables in given database");
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        /**Create_Table creates the table used to store data long term
+         *
+         */
+        public void Create_Table() {
+            String sqlQuiz = "CREATE TABLE QUIZ" +
+                    "(Quiz_ID INT not NULL PRIMARY KEY," +
+                    "QuizType VARCHAR(255))";
+            String sqlQuestions = "CREATE TABLE Questions" +
+                    "(Question_ID INT not NULL PRIMARY KEY," +
+                    "Question VARCHAR(255)," +
+                    "Quiz_ID  INT FOREIGN KEY REFERENCES QUIZ(Quiz_ID))";
+            String sqlAnswers = "CREATE TABLE Answers" +
+                    "(Answer_ID INT not NULL PRIMARY KEY AUTO_INCREMMENT," +
+                    "Quiz_ID INT FOREIGN KEY REFERENCES QUIZ(Quiz_ID)," +
+                    "Question_ID INT FOREIGN KEY REFERENCES Questions(Question_ID)," +
+                    "Answer VARCHAR(255),"+
+                    "isCorrect BIT )";
+
+
+            //Trying a connection and opening it
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_User, DB_password);
+                 Statement stmt = conn.createStatement();){
+
+                stmt.executeUpdate(sqlQuiz);
+                stmt.executeUpdate(sqlQuestions);
+                stmt.executeUpdate(sqlQuiz);
+
+                System.out.println("Created tables in given database");
+
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+
+
+
+        }
