@@ -3,7 +3,10 @@ package quizWizApp;
 import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 
 
@@ -97,9 +100,9 @@ public class DB_Handler {
     /**GetQuizList returns a list of all quiz numbers
      *
      */
-    public ArrayList(int) getQuizList(){
+    public ArrayList<Integer> getQuizList(){
         String Query = "SELECT Quiz_ID FROM QUIZ";
-        ArrayList(int) quizlist = new ArrayList(int);
+        ArrayList<Integer> quizlist = new ArrayList<Integer>();
 
         try(Connection conn = DriverManager.getConnection(DB_URL, DB_User, DB_password);
             Statement stmt = conn.createStatement();
@@ -111,11 +114,22 @@ public class DB_Handler {
         }catch(SQLException e) {
             e.printStackTrace();
         }
+        
+		return quizlist;
     }
 
 
     public Quiz_Object getQuiz(int someId){
-        String Query = "SELECT q.quiz_name, q.quiz_type, qu.question, a.answer, a.istrue FROM quiz q JOIN questions qu ON q.quiz_id = qu.quiz_id JOIN answers a ON a.question_id = qu.question_id WHERE q.quiz_id = "someId";";
+        String Query = "SELECT q.quiz_name, q.quiz_type, qu.question, a.answer, a.istrue "
+        		+ "FROM quiz q JOIN questions qu ON q.quiz_id = qu.quiz_id JOIN answers a ON a.question_id = qu.question_id WHERE q.quiz_id = " + someId + ";";
+		
+        
+        
+        
+        
+        
+        
+        return null;
 
 
     }
@@ -125,17 +139,53 @@ public class DB_Handler {
         int latest_quiz =0;
 
         String query = "INSERT INTO QUIZ (QuizType) values ('test description')";
-        ArrayList(int) numberOfStrings = new ArrayList(int);
+        ArrayList<Integer> QuizList = new ArrayList<Integer>(); 
 
+        ArrayList<String> Questions = quizToStore.getQuiz_Questions();
+        ArrayList<String> Answers = quizToStore.getQuiz_Answers();
+        ArrayList<String> incorrectAnswers1 = quizToStore.getQuiz_Incorrect_Answers1();
+        ArrayList<String> incorrectAnswers2 = quizToStore.getQuiz_Incorrect_Answers2();
+        ArrayList<String> incorrectAnswers3 = quizToStore.getQuiz_Incorrect_Answers3();
+        
+        
         //creating a method to store and create a quiz
-        try(Connection con = DriverManager.getConnection(DB_URL,DB_User,DB_password);
+        try(Connection conn = DriverManager.getConnection(DB_URL,DB_User,DB_password);
                 Statement stmt = conn.createStatement();){
 
             //creating and executing the quarry
-
+        	//this run of the query creates the specific quiz
             stmt.executeUpdate(query);
-
-
+            
+            QuizList = getQuizList();
+            int QuizID = QuizList.size() - 1;
+            
+            
+            for (int i = 0; i < 10; i++) {
+            	
+            	//this creates a query for each revolution to insert all ten questions into the 
+				query = "INSERT INTO Question(Question_ID, Question, Quiz_ID) values ("+ i  + Questions.get(i) + QuizID + ")";
+				
+				stmt.executeUpdate(query);
+			}
+            
+            for (int i = 0; i < 10; i++) {
+            	//inserting the correct answer 
+            	query = "INSERT INTO answers (Quiz_ID, Question_ID, Answer, isCorrect) Values(" + QuizID +","+ i +","+ Answers.get(i) + ",0)";
+            	stmt.executeUpdate(query);
+            	
+            	//the next 6 lines insert the incorrect answers, binding them to the matching questions
+            	query = "INSERT INTO answers (Quiz_ID, Question_ID, Answer, isCorrect) Values(" + QuizID +","+ i +","+ incorrectAnswers1.get(i) + ",1)";
+            	stmt.executeUpdate(query);
+            	
+            	query = "INSERT INTO answers (Quiz_ID, Question_ID, Answer, isCorrect) Values(" + QuizID +","+ i +","+ incorrectAnswers2.get(i) + ",1)";
+            	stmt.executeUpdate(query);
+            	
+            	query = "INSERT INTO answers (Quiz_ID, Question_ID, Answer, isCorrect) Values(" + QuizID +","+ i +","+ incorrectAnswers3.get(i) + ",1)";
+            	stmt.executeUpdate(query);
+				
+			}
+            
+            
 
 
         }catch (SQLException e){
