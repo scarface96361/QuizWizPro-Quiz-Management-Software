@@ -119,7 +119,7 @@ public class DB_Handler {
     }
 
 
-    //Todo 4/12/2022 implement the ability to pull the quiz from the database and pass back a Quiz_Object to use for taking quizes
+    //TODO 4/12/2022 implement the ability to pull the quiz from the database and pass back a Quiz_Object to use for taking quizes
     public Quiz_Object getQuiz(int someId){
         String Query = "SELECT q.quiz_name, q.quiz_type, qu.question, a.answer, a.istrue "
         		+ "FROM quiz q JOIN questions qu ON q.quiz_id = qu.quiz_id JOIN answers a ON a.question_id = qu.question_id WHERE q.quiz_id = " + someId + ";";
@@ -130,6 +130,12 @@ public class DB_Handler {
     }
 
 
+    //TODO test method
+    /**storeQuiz is a method that takes a quiz object created and stores it in the long term storage database
+     * 
+     * 
+     * @param quizToStore
+     */
     public void storeQuiz(Quiz_Object quizToStore) {
         int latest_quiz =0;
 
