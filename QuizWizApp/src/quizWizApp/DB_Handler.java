@@ -4,7 +4,7 @@ import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.function.ToDoubleBiFunction;
+
 
 public class DB_Handler {
 
@@ -40,7 +40,7 @@ public class DB_Handler {
      * is functional to validate the connection.
      *
      */
-    // TODO: 3/17/2022 Create code to connect to AWS database to validate the connection.
+
     public void DB_Test(){
         System.out.println("incomplete testing method. plan is to connect to database to validate the connection");
         Connection conn=null;
@@ -72,13 +72,13 @@ public class DB_Handler {
                 "(Answer_ID INT not NULL PRIMARY KEY AUTO_INCREMMENT," +
                 "Quiz_ID INT FOREIGN KEY REFERENCES QUIZ(Quiz_ID)," +
                 "Question_ID INT FOREIGN KEY REFERENCES Questions(Question_ID)," +
-                "Answer VARCHAR(255),"+
+                "Answer VARCHAR(255)," +
                 "isCorrect BIT )";
 
 
         //Trying a connection and opening it
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_User, DB_password);
-             Statement stmt = conn.createStatement();){
+             Statement stmt = conn.createStatement();) {
 
             stmt.executeUpdate(sqlQuiz);
             stmt.executeUpdate(sqlQuestions);
@@ -86,13 +86,34 @@ public class DB_Handler {
 
             System.out.println("Created tables in given database");
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**GetQuizList returns a list of all quiz numbers
+     *
+     */
+    public ArrayList(int) getQuizList(){
+        String Query = "SELECT Quiz_ID FROM QUIZ";
+        ArrayList(int) quizlist = new ArrayList(int);
+
+        try(Connection conn = DriverManager.getConnection(DB_URL, DB_User, DB_password);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(Query);) {
+
+            while (rs.next()){
+                quizlist.add(rs.getInt("Quiz_ID"));
+            }
+        }catch(SQLException e){
             e.printStackTrace();
         }
 
 
 
+    }
 
 
-        }
+
 }

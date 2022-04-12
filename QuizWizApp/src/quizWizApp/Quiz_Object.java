@@ -33,7 +33,7 @@ public class Quiz_Object extends Object {
         Quiz_Incorrect_Answers3 = IncorrectAnswers3;
     }
 
-    //todo Figure out if this object requires any additional methods.
+
 
     //The following methods are to set the questions and answers on their own.
     public void setQuiz_Questions(ArrayList<String> Questions){
