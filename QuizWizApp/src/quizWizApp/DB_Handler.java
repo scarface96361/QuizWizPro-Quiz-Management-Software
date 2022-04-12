@@ -6,12 +6,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
+
+
 public class DB_Handler {
 
 
-    String DB_URL ="jdbc:mysql://quizmaker.cs5pwn0dgd4l.us-east-1.rds.amazonaws.com:3306";
-    String DB_User = "quizmaker";
-    String DB_password = "quizmaker";
+    String DB_URL ="jdbc:mysql://localhost/finalproject";
+    String DB_User = "root";
+    String DB_password = "123456";
     String DB_Connect;
 
 
@@ -106,10 +108,39 @@ public class DB_Handler {
             while (rs.next()){
                 quizlist.add(rs.getInt("Quiz_ID"));
             }
-        }catch(SQLException e){
+        }catch(SQLException e) {
             e.printStackTrace();
         }
+    }
 
+
+    public Quiz_Object getQuiz(int someId){
+        String Query = "SELECT q.quiz_name, q.quiz_type, qu.question, a.answer, a.istrue FROM quiz q JOIN questions qu ON q.quiz_id = qu.quiz_id JOIN answers a ON a.question_id = qu.question_id WHERE q.quiz_id = "someId";";
+
+
+    }
+
+
+    public void storeQuiz(Quiz_Object quizToStore) {
+        int latest_quiz =0;
+
+        String query = "INSERT INTO QUIZ (QuizType) values ('test description')";
+        ArrayList(int) numberOfStrings = new ArrayList(int);
+
+        //creating a method to store and create a quiz
+        try(Connection con = DriverManager.getConnection(DB_URL,DB_User,DB_password);
+                Statement stmt = conn.createStatement();){
+
+            //creating and executing the quarry
+
+            stmt.executeUpdate(query);
+
+
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
 
     }
