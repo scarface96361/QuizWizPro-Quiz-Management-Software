@@ -97,6 +97,10 @@ public class DB_Handler {
 
     }
 
+    
+    
+    
+    
     /**GetQuizList returns a list of all quiz numbers
      *
      */
@@ -119,17 +123,98 @@ public class DB_Handler {
     }
 
 
-    //TODO 4/12/2022 implement the ability to pull the quiz from the database and pass back a Quiz_Object to use for taking quizes
+    //TODO 4/16/2022 test method
+    /**getQuiz takes an integer for the quiz ID to get a specific quiz from the database
+     * 
+     * @param someId
+     * @return
+     */
     public Quiz_Object getQuiz(int someId){
-        String Query = "SELECT q.quiz_name, q.quiz_type, qu.question, a.answer, a.istrue "
-        		+ "FROM quiz q JOIN questions qu ON q.quiz_id = qu.quiz_id JOIN answers a ON a.question_id = qu.question_id WHERE q.quiz_id = " + someId + ";";
+        String SQL = "SELECT * FROM questions WHERE Quiz_ID =" + someId+";";
+      
         
-        return null;
+        
+        //these are the arraylists to store the questions and answers
+        ArrayList<String> Questions = new ArrayList<String>();
+        ArrayList<String> Correct_Answers = new ArrayList<String>();
+        ArrayList<String> inCorrect_Answers1 = new ArrayList<String>();
+        ArrayList<String> inCorrect_Answers2 = new ArrayList<String>();
+        ArrayList<String> inCorrect_Answers3 = new ArrayList<String>();
+        
+        
+        
+        //this try catch block checks the questions and adds them to the arraylist for questions
+        try(Connection conn = DriverManager.getConnection(DB_URL,DB_User,DB_password);
+        	Statement stmt = conn.createStatement();
+        	ResultSet rs = stmt.executeQuery(SQL);){
+        	
+        	while(rs.next()) {
+        		Questions.add(rs.getString("Question"));
+        	}
+        }catch(SQLException e) {
+        	e.printStackTrace();
+        }
+        
+        
+        //this section of code takes and fills the correct answers
+        SQL = "SELECT * FROM answers WHERE Quiz_ID= '" + someId +"' AND  isCorrect = 0 ORDER BY Question_ID ASC;";  
+        try(Connection conn = DriverManager.getConnection(DB_URL,DB_User,DB_password);
+        	Statement stmt = conn.createStatement();
+        	ResultSet rs = stmt.executeQuery(SQL);){
+        	
+        	//filling the data into the correct_answers arraylist
+        	while (rs.next()) {
+        		Correct_Answers.add(rs.getString("Answer"));
+			}	
+        }catch(SQLException e) {
+        	e.printStackTrace();
+        }
+        
+        
+        
+        //this section of code takes and fills the incorrect answers arraylists with the incorrect answers
+        SQL ="SELECT * FROM answers WHERE Quiz_ID = " +someId +" AND isCorrect = 1 ORDER BY Question_ID ASC;";
+        
+        try (Connection conn = DriverManager.getConnection(DB_URL,DB_User,DB_password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(SQL);){
+     
+        	
+        	while (rs.next()) {
+        		inCorrect_Answers1.add(rs.getString("Answer"));
+        		rs.next();
+        		inCorrect_Answers2.add(rs.getString("Answer"));
+        		rs.next();
+        		inCorrect_Answers3.add(rs.getString("Answer"));
+        		
+        	}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+        
+        Quiz_Object tempQuiz_Object = new Quiz_Object();
+        tempQuiz_Object.setQuiz_Questions(Questions);
+        tempQuiz_Object.setQuiz_Answers(Correct_Answers);
+        tempQuiz_Object.setQuiz_Incorrect_Answers1(inCorrect_Answers1);
+        tempQuiz_Object.setQuiz_Incorrect_Answers2(inCorrect_Answers2);
+        tempQuiz_Object.setQuiz_Incorrect_Answers3(inCorrect_Answers3);
+       	
+        	
+        return tempQuiz_Object;
 
 
     }
 
 
+    
+    
+    
+    
+    
+    
+    
     //TODO test method
     /**storeQuiz is a method that takes a quiz object created and stores it in the long term storage database
      * 
