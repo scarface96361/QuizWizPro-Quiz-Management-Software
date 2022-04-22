@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 
 import quizWizApp.QuizMenu;
 
-public class AdminLoginGUI extends JFrame{
+public class StudentLoginGUI extends JFrame{
 
     static JTextField usernameTextField;                            // declares JTextField
     static JLabel usernameLabel;                                    // declares JLabel
@@ -49,7 +49,7 @@ public class AdminLoginGUI extends JFrame{
     static boolean authenticated = false;
     private static int loginAttemptCounter = 0;
 
-    public AdminLoginGUI(){
+    public StudentLoginGUI(){
 
     // ******* HEADER *******
 
@@ -102,6 +102,7 @@ public class AdminLoginGUI extends JFrame{
 
     passwordTextField = new JTextField();                                           // creates password text field
     passwordTextField.setPreferredSize(new Dimension(250,30));         // sets size of password text field
+    
 
     passwordLabel = new JLabel("<html>Password</html>",SwingConstants.LEFT);   // labels password text field
     passwordLabel.setForeground(textColor);                                         // sets label text color
@@ -142,8 +143,8 @@ public class AdminLoginGUI extends JFrame{
 
            if(authenticated == true) {                                             // if credentials are authenticated...
 
-            QuizMenu adminMenu = new QuizMenu();
-            adminMenu.adminMenu();                                                 // ... run adminMenu() from QuizMenu.java...
+            QuizMenu studentMenu = new QuizMenu();
+            studentMenu.studentMenu();                                             // ... run studentMenu() from QuizMenu.java...
 			
             loginButton.setEnabled(false);                                      // ... disable the login button...
             frame.dispose();                                                       // ... close the window
@@ -159,8 +160,8 @@ public class AdminLoginGUI extends JFrame{
             } else {                                                               // if credentials are wrong 3 times...
 
                 frame.dispose();                                                   // ... close the window
-                QuizMenu adminMenu = new QuizMenu();                                
-                adminMenu.adminLoginPrompt();                                      // ... run adminLoginPrompt from QuizMenu.java that boots them back ...
+                QuizMenu studentMenu = new QuizMenu();                                
+                studentMenu.studentLoginPrompt();                                  // ... run studentLoginPrompt from QuizMenu.java that boots them back ...
                 loginAttemptCounter = 0;                                           // ... reset the login attempt counter
             } 
         } // end Action Listener
@@ -189,7 +190,7 @@ public class AdminLoginGUI extends JFrame{
             @Override
             public void actionPerformed(final ActionEvent click) {
                try {
-                new AdminMenuGUI();                              // goes back to Admin Menu page when clicked
+                new StudentMenuGUI();                            // goes back to Student Menu page when clicked
                } catch (Exception e) {
                    e.printStackTrace();
                }
@@ -258,7 +259,7 @@ public class AdminLoginGUI extends JFrame{
 
         // Creates the Frame
         frame = new JFrame();
-        frame.setTitle("Quiz Maker - Admin Login");              // sets frame title
+        frame.setTitle("Quiz Maker - Student Login");              // sets frame title
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);                 // sets width and height of frame          
         frame.setLayout(null);                                 // disables default layout manager
     
@@ -275,7 +276,7 @@ public class AdminLoginGUI extends JFrame{
 
     // ******* END FRAME *******
 
-    } // end AdminLoginGUI() constructor
+    } // end StudentLoginGUI() constructor
 
 //************************************************************************************************************************
 
@@ -305,4 +306,4 @@ public class AdminLoginGUI extends JFrame{
 
 	} // end authenticatePassword()
 
-} // end AdminLoginGUI class
+} // end StudentLoginGUI class

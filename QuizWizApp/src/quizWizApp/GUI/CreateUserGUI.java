@@ -8,32 +8,47 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import quizWizApp.QuizMenu;
+public class CreateUserGUI extends JFrame{
 
-public class AdminLoginGUI extends JFrame{
+
+    static JTextField firstNameTextField;                           // declares JTextField
+    static JLabel firstNameLabel;                                   // declares JLabel
+    static JPanel firstNamePanel;                                   // declares JPanel
+
+    static JTextField lastNameTextField;                            // declares JTextField
+    static JLabel lastNameLabel;                                    // declares JLabel
+    static JPanel lastNamePanel;                                    // declares JPanel
+
+    static JTextField emailTextField;                               // declares JTextField
+    static JLabel emailLabel;                                       // declares JLabel
+    static JPanel emailPanel;                                       // declares JPanel
+
+    static String[] choices = { "", "Administrator", "Student"};    // declares String Array
+    static JComboBox roleList;                                      // declares dropdown menu
+    static JLabel roleLabel;                                        // declares JLabel
+    static JPanel rolePanel;                                        // declares JPanel
 
     static JTextField usernameTextField;                            // declares JTextField
     static JLabel usernameLabel;                                    // declares JLabel
     static JPanel usernamePanel;                                    // declares JPanel
+
     static JTextField passwordTextField;                            // declares JTextField
     static JLabel passwordLabel;                                    // declares JLabel
     static JPanel passwordPanel;                                    // declares JPanel
-    static JButton loginButton;                                     // declares JButton
-    static JPanel loginPanel;                                       // declares JPanel
-    static JLabel wrongLabel;                                       // declares JLabel
-    static JPanel wrongPanel;                                       // declares JPanel     
 
+    static JButton submitButton;                                    // declares JButton
+    static JPanel submitPanel;                                      // declares JPanel
     static JLabel headerLabel;                                      // declares JLabel
     static JPanel headerPanel;                                      // declares JPanel
     static JLabel backLabel;                                        // declares JLabel
@@ -47,16 +62,17 @@ public class AdminLoginGUI extends JFrame{
     static Color bgColor = new Color(0xF2EFEA);                 // sets background color
 
     static boolean authenticated = false;
-    private static int loginAttemptCounter = 0;
+    static int loginAttemptCounter = 0;
+    static String typeOfAccount;
 
-    public AdminLoginGUI(){
+    public CreateUserGUI(){
 
     // ******* HEADER *******
 
          headerPanel = new JPanel();
          headerPanel.setBounds(25, 50, 750, 100);
          headerPanel.setBackground(bgColor);
-         headerLabel = new JLabel("<html>Please login to your account</html>", SwingConstants.CENTER);
+         headerLabel = new JLabel("<html>Create your account</html>", SwingConstants.CENTER);
          headerLabel.setForeground(textColor);                           // sets text color to Night
          headerLabel.setFont(new Font("Lib/Druk/Druk.otf", Font.BOLD, 32)); // sets font of text to Druk
          headerLabel.setVerticalAlignment(JLabel.TOP);                   // sets Vertical position of icon + text
@@ -65,23 +81,78 @@ public class AdminLoginGUI extends JFrame{
  
     // ******* END HEADER *******
 
+    // ******* TEXT FIELDS *******
 
-    // ******* WRONG CREDENTIALS LABEL *******
+        // First Name text field
 
-    wrongLabel = new JLabel
-                            ("<html>The username and/or password you entered was incorrect<br/>Please try again</html>");
-    wrongLabel.setForeground(Color.RED);                                  // make error message text red
-    wrongLabel.setFont(new Font("Lib/helvetica-neue-9-cufonfonts/HelveticaNeueMediumItalic.otf", Font.PLAIN, 12));
-    wrongPanel = new JPanel();
-    wrongPanel.setBounds(250, 290, 400, 38);            // place the panel
-    wrongPanel.add(wrongLabel);                                           // add label to panel
-    wrongPanel.setVisible(false);                                   // keep panel hidden until needed
+    firstNameTextField = new JTextField();                                           // creates Frist Name text field
+    firstNameTextField.setPreferredSize(new Dimension(250,30));         // sets size of First Name text field
+
     
-    // ******* END WRONG CREDENTIALS LABEL *******
+    firstNameLabel = new JLabel("<html>First Name</html>",SwingConstants.LEFT); // labels First Name text field
+    firstNameLabel.setForeground(textColor);                                         // sets label text color
+    firstNameLabel.setFont(new Font("Lib/helvetica-neue-9-cufonfonts/HelveticaNeueMediumItalic.otf", Font.ITALIC, 15));
+    
+    firstNamePanel = new JPanel();
+    firstNamePanel.setBounds(40, 150, 360,40);                     // places First Name panel
+    firstNamePanel.setBackground(bgColor);                                           // sets background of First Name panel
+    firstNamePanel.add(firstNameLabel);                                              // adds label to panel
+    firstNamePanel.add(firstNameTextField);                                          // adds text field to panel
+    
+        // Last Name text field
+        
+    lastNameTextField = new JTextField();                                           // creates Last Name text field
+    lastNameTextField.setPreferredSize(new Dimension(250,30));         // sets size of Last Name text field
+    
+    lastNameLabel = new JLabel("<html>Last Name</html>",SwingConstants.LEFT); // labels Last Name text field
+    lastNameLabel.setForeground(textColor);                                         // sets label text color
+    lastNameLabel.setFont(new Font("Lib/helvetica-neue-9-cufonfonts/HelveticaNeueMediumItalic.otf", Font.ITALIC, 15));
+    
+    lastNamePanel = new JPanel();
+    lastNamePanel.setBounds(40, 190, 360,40);                     // places Last Name panel
+    lastNamePanel.setBackground(bgColor);                                           // sets background of Last Name panel
+    lastNamePanel.add(lastNameLabel);                                               // adds label to panel
+    lastNamePanel.add(lastNameTextField);                                           // adds text field to panel
 
-
-    // ******* LOGIN TEXT FIELDS *******
-
+        // Email Address text field
+        
+    emailTextField = new JTextField();                                              // creates email text field
+    emailTextField.setPreferredSize(new Dimension(250,30));            // sets size of email text field
+        
+    emailLabel = new JLabel("<html>Email</html>",SwingConstants.LEFT);         // labels email text field
+    emailLabel.setForeground(textColor);                                            // sets label text color
+    emailLabel.setFont(new Font("Lib/helvetica-neue-9-cufonfonts/HelveticaNeueMediumItalic.otf", Font.ITALIC, 15));
+        
+    emailPanel = new JPanel();
+    emailPanel.setBounds(40, 230, 360,40);                     // places email panel
+    emailPanel.setBackground(bgColor);                                           // sets background of email panel
+    emailPanel.add(emailLabel);                                                  // adds label to panel
+    emailPanel.add(emailTextField);                                              // adds text field to panel
+    
+        // Role Dropdown Menu
+    roleList = new JComboBox<>(choices);
+    roleList.setPreferredSize(new Dimension(250,30));
+    roleList.addActionListener(new ActionListener() {                            // Action Listener anonymous class
+        @Override
+        public void actionPerformed(final ActionEvent click) {
+           try {
+            System.out.println("Role is: " + roleList.getSelectedIndex());
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+        }
+    });
+    
+    roleLabel = new JLabel("<html>Role</html>", SwingConstants.LEFT);
+    roleLabel.setForeground(textColor);
+    roleLabel.setFont(new Font("Lib/helvetica-neue-9-cufonfonts/HelveticaNeueMediumItalic.otf", Font.ITALIC, 15));
+    
+    rolePanel = new JPanel();
+    rolePanel.setBounds(40, 270, 360,40);                     // places email panel
+    rolePanel.setBackground(bgColor);                                           // sets background of email panel
+    rolePanel.add(roleLabel);                                                   // adds label to panel
+    rolePanel.add(roleList);                                                    // adds text field to panel
+    
         // Username text field
 
     usernameTextField = new JTextField();                                           // creates username text field
@@ -92,7 +163,7 @@ public class AdminLoginGUI extends JFrame{
     usernameLabel.setFont(new Font("Lib/helvetica-neue-9-cufonfonts/HelveticaNeueMediumItalic.otf", Font.ITALIC, 15));
 
     usernamePanel = new JPanel();
-    usernamePanel.setBounds(40, 150, 350,40);                     // places username panel
+    usernamePanel.setBounds(40, 310, 360,40);                     // places username panel
     usernamePanel.setBackground(bgColor);                                           // sets background of username panel
     usernamePanel.add(usernameLabel);                                               // adds label to panel
     usernamePanel.add(usernameTextField);                                           // adds text field to panel
@@ -108,70 +179,44 @@ public class AdminLoginGUI extends JFrame{
     passwordLabel.setFont(new Font("Lib/helvetica-neue-9-cufonfonts/HelveticaNeueMediumItalic.otf", Font.ITALIC, 15));
 
     passwordPanel = new JPanel();
-    passwordPanel.setBounds(40, 200, 350,40);                     // places password panel
+    passwordPanel.setBounds(40, 350, 360,40);                     // places password panel
     passwordPanel.setBackground(bgColor);                                           // sets background of password panel
     passwordPanel.add(passwordLabel);                                               // adds label to panel
     passwordPanel.add(passwordTextField);                                           // adds text field to panel
 
-        // Login button that applies textfields to adminLogin();
+        // Submit button that applies textfields to addNewUserToDatabse()
 
-    loginButton = new JButton("Login");                                        // creates login button
-    loginButton.addActionListener(new ActionListener() {                            // Action Listener anonymous class
+    submitButton = new JButton("Submit");                                        // creates login button
+    submitButton.addActionListener(new ActionListener() {                            // Action Listener anonymous class
         @Override
         public void actionPerformed(final ActionEvent click) {
            try {
 
-
-        /*** USE THIS BLOCK OF CODE IF CAN'T LOGIN ***/
-
-        //    authenticated = true;
-        //    frame.dispose();
-
-        /*** USE THIS BLOCK OF CODE IF CAN'T LOGIN ***/
+            if (roleList.getSelectedIndex() == 1) {
+                typeOfAccount = "A";
         
+            } else if (roleList.getSelectedIndex() == 2) {
+                typeOfAccount = "S";
+            } // end of if statement
 
-            authenticatePassword(usernameTextField.getText(), passwordTextField.getText()); // takes text from text fields and passes them through authenticatePassword()
-            System.out.println("User credentials are " + authenticated);            // prints if credentials are authenticated to console
-            wrongPanel.setVisible(false);                                     // shows error message because credentials are wrong
+           // Get all the text fields and push them to addNewUserToDatabse()
+            addNewUserToDatabse(firstNameTextField.getText(), lastNameTextField.getText(), 
+           emailTextField.getText(), typeOfAccount, usernameTextField.getText(), passwordTextField.getText());
+
+           frame.dispose();
+
            } catch (Exception e) {
                e.printStackTrace();
            }
-
-        // Testing the password and user name combination is correct to login
-		// user allowed 3 attempts
-
-           if(authenticated == true) {                                             // if credentials are authenticated...
-
-            QuizMenu adminMenu = new QuizMenu();
-            adminMenu.adminMenu();                                                 // ... run adminMenu() from QuizMenu.java...
-			
-            loginButton.setEnabled(false);                                      // ... disable the login button...
-            frame.dispose();                                                       // ... close the window
-
-            new EndPageGUI();
-
-            } else if(loginAttemptCounter < 2) {                                   // ... if the user hasn't used 3 login attempts...
-
-                wrongPanel.setVisible(true);                                 // ... show error message because credentials are wrong...
-                loginAttemptCounter++;                                             // ... log the attempt ...
-                System.out.println("\t\t Login attempts: " + loginAttemptCounter); // ... to the console
-
-            } else {                                                               // if credentials are wrong 3 times...
-
-                frame.dispose();                                                   // ... close the window
-                QuizMenu adminMenu = new QuizMenu();                                
-                adminMenu.adminLoginPrompt();                                      // ... run adminLoginPrompt from QuizMenu.java that boots them back ...
-                loginAttemptCounter = 0;                                           // ... reset the login attempt counter
-            } 
         } // end Action Listener
     });
 
-    loginPanel = new JPanel();
-    loginPanel.setBackground(bgColor);                           // sets correct color to panel
-    loginPanel.setBounds(400, 250, 70, 35);    // places login panel
-    loginPanel.add(loginButton);                                 // adds login button to panel
+    submitPanel = new JPanel();
+    submitPanel.setBackground(bgColor);                           // sets correct color to panel
+    submitPanel.setBounds(400, 410, 70, 35);    // places login panel
+    submitPanel.add(submitButton);                                // adds login button to panel
 
-    // ******* END LOGIN TEXT FIELDS *******
+    // ******* END TEXT FIELDS *******
 
     
     // ******* GO BACK *******
@@ -189,7 +234,7 @@ public class AdminLoginGUI extends JFrame{
             @Override
             public void actionPerformed(final ActionEvent click) {
                try {
-                new AdminMenuGUI();                              // goes back to Admin Menu page when clicked
+                new MainMenuGUI();                              // goes back to Main Menu page when clicked
                } catch (Exception e) {
                    e.printStackTrace();
                }
@@ -200,7 +245,7 @@ public class AdminLoginGUI extends JFrame{
         
         // Create "Go Back" Panel
         backPanel = new JPanel();
-        backPanel.setBounds(30, 270, 100, 100);
+        backPanel.setBounds(30, 430, 100, 100);
         backPanel.setBackground(bgColor);
 
         // Create "Create Account" Label with Image
@@ -258,51 +303,51 @@ public class AdminLoginGUI extends JFrame{
 
         // Creates the Frame
         frame = new JFrame();
-        frame.setTitle("Quiz Maker - Admin Login");              // sets frame title
+        frame.setTitle("Quiz Maker - Create User");              // sets frame title
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);                 // sets width and height of frame          
         frame.setLayout(null);                                 // disables default layout manager
     
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);          // exits the application on close
         frame.getContentPane().setBackground(bgColor);                 // sets background color as a warm white
         frame.add(headerPanel);                                        // adds header panel to frame
+        frame.add(firstNamePanel);                                     // adds First Name panel to frame
+        frame.add(lastNamePanel);                                      // adds Last Name panel to frame
+        frame.add(emailPanel);                                         // adds email panel to frame
+        frame.add(rolePanel);                                          // adds role dropdown panel to frame
         frame.add(usernamePanel);                                      // adds username panel to frame
         frame.add(passwordPanel);                                      // adds password panel to frame
-        frame.add(loginPanel);                                         // adds login panel to frame
-        frame.add(wrongPanel);                                         // adds wrong credentials panel to frame
+        frame.add(submitPanel);                                        // adds login panel to frame
         frame.add(backPanel);                                          // adds go back panel to frame
         frame.add(closePanel);                                         // adds close panel to frame
         frame.setVisible(true);                                     // makes frame visible
 
     // ******* END FRAME *******
 
-    } // end AdminLoginGUI() constructor
+    } // end CreateUserGUI() constructor
 
 //************************************************************************************************************************
+//***               Create New User	
+//***************** Add Created User to Databse****************************************************************************
 
-	public static boolean authenticatePassword(String usrName, String uPass) throws Exception {
+public void addNewUserToDatabse(String firstName, String lastName, String email,
+                                String typeOfAccount, String username, String password) throws Exception {
 
-		String url = "jdbc:mysql://localhost:3306/userdb";
-		String uName = "root";
-		String pass = "root";
-		String query = "select password from user where username = '" + usrName + "'";
-		
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection connection = DriverManager.getConnection(url, uName, pass);
+    String url = "jdbc:mysql://localhost:3306/userdb";
+    String uName = "root";
+    String pass = "root";
+    String query = ("INSERT INTO user(first_name, last_name, email," + " account_type, username, password ) "
+            + "VALUES ('" + firstName + "'," + "'" + lastName + "','" + email + "','"
+            + typeOfAccount + "'," + "'" + username + "'," + "'" + password + "' )");
 
-		Statement myStmt = connection.createStatement();
-		ResultSet resultSet = myStmt.executeQuery(query);
-		resultSet.next();
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    Connection connection = DriverManager.getConnection(url, uName, pass);
+    PreparedStatement myStmt = connection.prepareStatement(query);
 
-		String dbPassword = resultSet.getString("password");
-		
-		if (usrName.equals(dbPassword)) {
+    myStmt.executeUpdate();
 
-			authenticated = false;
+    System.out.println("Your Account Has Been Created");
+    connection.close();
 
-			return authenticated = true;
-		}
-		return authenticated;
+} // end addNewUserToDatabase()
 
-	} // end authenticatePassword()
-
-} // end AdminLoginGUI class
+} // end CreateUserGUI class

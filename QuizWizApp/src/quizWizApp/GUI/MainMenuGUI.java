@@ -65,7 +65,6 @@ public class MainMenuGUI extends JFrame {
                try {
                 menu.adminLoginPrompt();
                } catch (Exception e) {
-                   //TODO: handle exception
                    e.printStackTrace();
                }
                teacherButton.setEnabled(false);
@@ -109,7 +108,6 @@ public class MainMenuGUI extends JFrame {
                try {
                 menu.studentLoginPrompt();
                } catch (Exception e) {
-                   //TODO: handle exception
                    e.printStackTrace();
                }
                studentButton.setEnabled(false);

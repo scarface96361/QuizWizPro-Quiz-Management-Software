@@ -3,18 +3,15 @@ package quizWizApp.GUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class StartPage extends JFrame {
+public class EndPageGUI extends JFrame {
 
-    static JButton startButton;                                     // declares JButton
     static JPanel imagePanel;                                       // declares JPanel
     static JLabel mainLabel;                                        // declares JLabel
     static JPanel subtextPanel;                                     // declares JPanel
@@ -24,32 +21,16 @@ public class StartPage extends JFrame {
     static Color bgColor = new Color(0xF2EFEA);                 // sets background color
 
 
-    public StartPage(){
+    public EndPageGUI(){
 
     // ******* START BUTTON ********
-    ImageIcon startIcon = new ImageIcon("Lib/209 - Media Buttons - 10.Flat Multicolor (A4 B99)/PNG/1024 x 1024/9914 - Play.png");
-    Image img = startIcon.getImage();  
+    ImageIcon byeIcon = new ImageIcon("Lib/209 - Media Buttons - 10.Flat Multicolor (A4 B99)/PNG/1024 x 1024/9914 - Play.png");
+    Image img = byeIcon.getImage();  
     Image newimg = img.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
-    startIcon = new ImageIcon(newimg);
-
-        // Creates start button
-        startButton = new JButton();                                                      // initializes startButton
-        startButton.setIcon(startIcon);  // sets the image as the button
-        startButton.setVerticalAlignment(JButton.CENTER);                                // centers the image on the button
-        startButton.setBorderPainted(false);                                          // makes the border of the button transparent so the image is the button
-        startButton.addActionListener(new ActionListener() {                             // Action Listener anonymous class
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                startButton.setEnabled(false);
-                new MainMenuGUI();
-                frame.dispose();
-            }
-        });
-
-    // ******* END START BUTTON ********
+    byeIcon = new ImageIcon(newimg);
 
 
-    // ******* HOURGLASS PANEL ********
+    // ******* GOODBYE PANEL ********
 
         // Create "Quiz Maker Menu" Panel
         imagePanel = new JPanel();
@@ -58,30 +39,29 @@ public class StartPage extends JFrame {
 
         // Create "Quiz Maker Menu" Label with Image
         mainLabel = new JLabel();
-        mainLabel.setText("Quiz Maker Main Menu");
+        mainLabel.setText("<html>Welcome!<br/>Continue in Command Line</html>");
         mainLabel.setHorizontalTextPosition(JLabel.CENTER);            // sets text in center
         mainLabel.setVerticalTextPosition(JLabel.TOP);                 // sets text above image
         mainLabel.setForeground(textColor);                            // sets text color to Night
-        mainLabel.setFont(new Font("Lib/Druk/DrukTextWide-Bold.otf", Font.BOLD, 60)); // sets font of text to Druk
+        mainLabel.setFont(new Font("Lib/Druk/DrukTextWide-Bold.otf", Font.BOLD, 46)); // sets font of text to Druk
         mainLabel.setIconTextGap(-100);                                // brings text closer to the image
         mainLabel.setVerticalAlignment(JLabel.CENTER);                 // sets Vertical position of icon + text
         mainLabel.setHorizontalAlignment(JLabel.CENTER);               // sets Horizontal position of icon + text
         imagePanel.add(mainLabel);                                     // adds label to panel
-        imagePanel.add(startButton); 
 
-    // ******* END HOURGLASS PANEL ********                         
+    // ******* END GOODBYE PANEL ********                         
 
 
     // ******* SUBTEXT PANEL *******
 
-        // Create "Click to Begin" Panel
+        // Create "Closing in 5 seconds" Panel
         subtextPanel = new JPanel();
         subtextPanel.setBounds(50, 450, 700, 500);           // sets bounds of the subtext panel below the other panel 
         subtextPanel.setBackground(bgColor);                                   // sets background color
         
         // Create "Click to Begin" Label
         subtextLabel = new JLabel();
-        subtextLabel.setText("Click to begin");                           // sets text
+        subtextLabel.setText("Closing in 5 seconds...");                  // sets text
         subtextLabel.setHorizontalTextPosition(JLabel.CENTER);                 // sets text in center of the label
         subtextLabel.setVerticalTextPosition(JLabel.TOP);                      // sets text on top of the label
         subtextLabel.setForeground(textColor);                                 // sets text color to Night
@@ -97,17 +77,19 @@ public class StartPage extends JFrame {
 
         // Creates the Frame
         frame = new JFrame();
-        frame.setTitle("Quiz Maker - Start Page");                       // sets frame title
+        frame.setTitle("Quiz Maker - End Page");                       // sets frame title
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);                         // sets width and height of frame          
         frame.setLayout(null);                                         // disables default layout manager
     
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                  // exits the application on close
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                  // exits the application on close
         frame.getContentPane().setBackground(bgColor);                         // sets background color as a warm white
         frame.add(imagePanel);                                                 // adds image panel to frame
         frame.add(subtextPanel);                                               // adds subtext panel to frame
         frame.setVisible(true);                                             // makes frame visible
+
+        new Timer(5_000, (e) -> { frame.setVisible(false); frame.dispose(); }).start();
     
     // ******* END FRAME *******
-    } // end StartPage constructor
+    } // end EndPage() constructor
     
-} // end StartPage class
+} // end EndPage class
