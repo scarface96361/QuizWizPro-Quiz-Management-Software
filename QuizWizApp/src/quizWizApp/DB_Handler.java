@@ -123,7 +123,8 @@ public class DB_Handler {
     }
 
 
-    //TODO 4/16/2022 test method
+    //tested functional
+    
     /**getQuiz takes an integer for the quiz ID to get a specific quiz from the database
      * 
      * @param someId
