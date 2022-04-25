@@ -67,26 +67,38 @@ public class QuizMenu {
 	// ***Student Main Menu***
 	public void studentMenu() {
 
+		
+		//4/24/2022 Joseph rosenbaum. modifying and refactoring this code to allow for taking the quizes
 		Scanner inputSInterface = new Scanner(System.in);
+		
+		DB_Handler database = new DB_Handler();
 
 		System.out.println("1. Take Quiz");
-		System.out.println("2. Check Quiz Scores ");
-		System.out.println("3. Go Back ");
-		System.out.println("4. Exit Program ");
+		System.out.println("2. Go Back ");
+		System.out.println("3. Exit Program ");
 
 		int interfaceSelection = inputSInterface.nextInt();
 
 		if (interfaceSelection == 1) {
 			// *** Take Quiz
-			System.out.println("This Function has not yet been coded");
+			//System.out.println("This function is being coded now");
+			
+			//setting up the code to retrieve a quiz and take it
+			System.out.println("Please enter the quiz number your professor gave you");
+			int quizNum = inputSInterface.nextInt();
+			
+			Quiz_Object quizToTake = database.getQuiz(quizNum);
+			 
+			quizTake Quizer = new quizTake();
+			 
+			Quizer.takeQuiz(quizToTake);
+			
+			
 		} else if (interfaceSelection == 2) {
-
-			System.out.println("This Function has not yet been coded");
-			// ***Check Quizzes Taken and Quiz Score
-		} else if (interfaceSelection == 3) {
 			startMenu();
+		} 
 			// ***Exit Program
-		} else if (interfaceSelection == 4) {
+		else if (interfaceSelection == 3) {
 			System.exit(interfaceSelection);
 
 		}
