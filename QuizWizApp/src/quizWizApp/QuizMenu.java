@@ -2,12 +2,14 @@ package quizWizApp;
 
 import java.util.Scanner;
 
+import quizWizApp.GUI.AdminMenuGUI;
+import quizWizApp.GUI.StudentMenuGUI;
+
 public class QuizMenu {
 
 	public String AdminUserId;
 	public String AdminPassword;
 	public int menuSelection;
-
 //-------------------------------------------------------------------------------------------------------------------------------
 	// *****START MENU*******
 	// This is the first Menu All users will see when program begins
@@ -46,80 +48,17 @@ public class QuizMenu {
 		}
 	}
 
-	// ---------------------------------------------------------------------------------------------------------------------------
-	// ***Login Prompt Menu***
+	// ---------------------------------------------------------------------------------------------------------------------------	// ***Login Prompt Menu***
 	public void studentLoginPrompt() {
-		Scanner inputStudentM = new Scanner(System.in);
-		// ***Menu
-		System.out.println("You are a Test Taking Student. Please Select From THe Following Options");
-		System.out.println("1. I already have a Student account ");
-		System.out.println("2. Create a Student account ");
-		System.out.println("3. Go Back ");
-		System.out.println("4. Exit Program ");
-		int studentMenuSelection = inputStudentM.nextInt();
-
-		if (studentMenuSelection == 1) {
-			// ***I already Have a Student Account
-			QuizAppUser studentUser = new QuizAppUser();
-			studentUser.studentLogin();
-		} else if (studentMenuSelection == 2) {
-			// ***Create Student Account
-			QuizAppUser studentUser = new QuizAppUser();
-			try {
-				studentUser.createNewUser();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} else if (studentMenuSelection == 3) {
-			// ***Go Back
-			startMenu();
-
-		} else if (studentMenuSelection == 4) {
-			// ***Exit Program
-			System.exit(studentMenuSelection);
-
-		}
+	
+		new StudentMenuGUI();
 
 	}
 
 	// admin login prompt menu method
 	public void adminLoginPrompt() {
-		Scanner adminStudentM = new Scanner(System.in);
-		// escape Sequence to clear screen in console enivorment outside of IDE
-		System.out.print("\033[H\033[2J");
-		System.out.flush();
-		System.out.println("You are an administrator. Please Select From The Following Options");
-		System.out.println("1. I already have a Admin account ");
-		System.out.println("2. Create an Admin account ");
-		System.out.println("3. Go Back ");
-		System.out.println("4. Exit Program ");
-		int adminMenuSelection = adminStudentM.nextInt();
-
-		if (adminMenuSelection == 1) {
-			// *** I already have an account
-			QuizAppUser adminUser = new QuizAppUser();
-			adminUser.adminLogin();
-		} else if (adminMenuSelection == 2) {
-			// Create and admin account
-			QuizAppUser adminUser1 = new QuizAppUser();
-			try {
-				adminUser1.createNewUser();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} else if (adminMenuSelection == 3) {
-			// ***Go Back
-			startMenu();
-
-		} else if (adminMenuSelection == 4) {
-			// ***Exit
-			System.exit(adminMenuSelection);
-
-		}
+		
+		new AdminMenuGUI();
 
 	} // end of adminLoginPrompt
 
@@ -128,26 +67,38 @@ public class QuizMenu {
 	// ***Student Main Menu***
 	public void studentMenu() {
 
+		
+		//4/24/2022 Joseph rosenbaum. modifying and refactoring this code to allow for taking the quizes
 		Scanner inputSInterface = new Scanner(System.in);
+		
+		DB_Handler database = new DB_Handler();
 
 		System.out.println("1. Take Quiz");
-		System.out.println("2. Check Quiz Scores ");
-		System.out.println("3. Go Back ");
-		System.out.println("4. Exit Program ");
+		System.out.println("2. Go Back ");
+		System.out.println("3. Exit Program ");
 
 		int interfaceSelection = inputSInterface.nextInt();
 
 		if (interfaceSelection == 1) {
 			// *** Take Quiz
-			System.out.println("This Function has not yet been coded");
+			//System.out.println("This function is being coded now");
+			
+			//setting up the code to retrieve a quiz and take it
+			System.out.println("Please enter the quiz number your professor gave you");
+			int quizNum = inputSInterface.nextInt();
+			
+			Quiz_Object quizToTake = database.getQuiz(quizNum);
+			 
+			quizTake Quizer = new quizTake();
+			 
+			Quizer.takeQuiz(quizToTake);
+			
+			
 		} else if (interfaceSelection == 2) {
-
-			System.out.println("This Function has not yet been coded");
-			// ***Check Quizzes Taken and Quiz Score
-		} else if (interfaceSelection == 3) {
 			startMenu();
+		} 
 			// ***Exit Program
-		} else if (interfaceSelection == 4) {
+		else if (interfaceSelection == 3) {
 			System.exit(interfaceSelection);
 
 		}
